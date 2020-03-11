@@ -28,7 +28,9 @@ var fun = function() {}
 console.log(Object.prototype.toString.call(fun) === '[object Function]') // true
 
 
-// 
+// a.x '.'运算符优先级最高 当时a中还没有x属性的值还没被定义
+// b 其实指向的是栈中的a
+// a = { n: 1 } 运算后改变了a的新地址存储在堆中 
 var a = { n: 1 }
 var b = a
 a.x = a = { n: 2 }
