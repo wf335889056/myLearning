@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>html5语义化标签和css3</title>
+</head>
+<body>
+  <!-- 
+    h5新增的语义化标签有 canvas, audio, video, header, nav, footer, main, section, artcle ...
+    使用语义化标签的好处
+      可读性高, 有利于开发维护, 有利于构架良好的html结构
+      优化seo
+      减少div的使用, 有利于不同设备的识别(屏幕阅读器和盲人阅读器)
+  -->
+  <!-- 
+    css3新增样式 
+      animation transform flex grid
+      box-shadow transition filter
+      linear-gradient text-shadow  ...
+    伪元素'::' 
+      ::before ::after
+    伪类':'
+      :first-child :last-child :nth-child
+      :nth-of-type :disabled :checked ...
+   -->
+  <!-- 子div垂直居中 -->
+  <div class="bg" style="width: 500px;height: 500px;background-color: red;">
+    <div class="sm" style="width: 200px;height: 200px;background-color: blue;"></div>
+  </div>
+  <style>
+    /* 第一种 子元素是文本的情况 */
+    .bg {
+      text-align: center; line-height: 500px;
+    }
+    /* 第二种 flex */
+    .bg {
+      display: flex; justify-content: center; align-items: center;
+    }
+    /* 第三种 已知子div宽高 */
+    .bg { position: relative; }
+    .sm {
+      position: absolute;left: 50%;top: 50%;
+      margin: -100px 0 0 -100px;
+    }
+    /* 第四种 未知子div宽高 */
+    .bg { position: relative; }
+    .sm {
+      position: absolute;left: 50%;top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    /* 第五种 table */
+    .bg { 
+      display: table-cell;text-align: center;vertical-align: middle;
+    }
+    .sm { display: inline-block; }
+    /* 第六种 margin */
+    .bg { position: relative; }
+    .sm { position: absolute; margin: auto; left: 0; top: 0; right: 0; bottom: 0;}
+  </style>
+</body>
+</html>
