@@ -1,6 +1,6 @@
 http 
   无连接无状态 
-  请求方式 GET, POST, PUT, DELETE, HEAD,OPTIONS
+  请求方式 GET, POST, PUT, DELETE, HEAD, OPTIONS
   GET与POST的区别
   GET请求返回上一页无法再次请求, POST则需要再次请求
   GET参数是暴露在URL上拼接的, POST则通过request body的方式传输

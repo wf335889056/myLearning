@@ -16,8 +16,8 @@
 
 ## 2020/3/13
 
-react的生命周期, diff算法比较, key值的作用, 组件传值数据流向, props和state的区别, 创建组件的几种方式
+react的生命周期, diff算法比较, key值的作用, 组件传值数据流向, props和state的区别, 创建组件的几种方式(类组件, 高阶组件...)
 
 ## 2020/3/14
 
-react的性能优化, redux的工作原理和api功能, 高价组件, react hooks
+react的性能优化, react fiber, redux的工作原理和api功能, react hooks, 函数式编程
