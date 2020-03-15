@@ -77,10 +77,10 @@ console.log(instance1.colors);//"red,blue,green,black"
 instance1.sayName();//louis
 instance1.sayAge();//5
 
-var instance1 = new son("zhai",10);
-console.log(instance1.colors);//"red,blue,green"
-instance1.sayName();//zhai
-instance1.sayAge();//10
+var instance2 = new son("zhai",10);
+console.log(instance2.colors);//"red,blue,green"
+instance2.sayName();//zhai
+instance2.sayAge();//10
 /*
  * 组合继承避免了原型链和借用构造函数的不足之处, 
  * 可以用instanceof和Object.isPrototypeOf来识别继承创建的对象

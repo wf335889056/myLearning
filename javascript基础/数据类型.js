@@ -19,6 +19,8 @@
 console.log(typeof '这是一段字符串' === 'string') // true
 console.log(typeof 123 === 'number')  // true
 console.log(typeof false === 'boolean')  // true
+console.log(typeof null === 'object') // true
+console.log(typeof undefined === 'undefined') // true
 
 var obj = { a: 1, b: 2, c: [1,2,3] }
 console.log(Object.prototype.toString.call(obj) === '[object Object]') // true
@@ -37,3 +39,17 @@ a.x = a = { n: 2 }
 console.log(a) // { n: 2 }
 console.log(b) // { n: 1, x: { n:2 } }
 console.log(a.x) // undefined
+
+var q = { a: 1 }
+var w = q
+var e = q
+console.log(w == e) // true
+console.log(w === e) // true
+
+var z = { q: 2, w: 3 }
+var x = { q: 2, w: 3 }
+var c = z
+console.log(z == c) // true
+console.log(z === c) // true
+console.log(x == c) // false
+console.log(x === c) // false

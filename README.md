@@ -16,8 +16,23 @@
 
 ## 2020/3/13
 
-react的生命周期, diff算法比较, key值的作用, 组件传值数据流向, props和state的区别, 创建组件的几种方式(类组件, 高阶组件...)
+react的生命周期, diff算法比较, key值的作用, 组件传值数据流向, props和state的区别, 
+创建组件的几种方式(类组件, 高阶组件...)
 
 ## 2020/3/14
 
-react的性能优化, react fiber, redux的工作原理和api功能, react hooks, 函数式编程
+react的性能优化, react fiber, redux的工作原理和api功能, react hooks, 
+函数式编程, react-router/react-router-dom
+
+## 2020/3/15
+
+vue实现数据双向绑定的原理(数据劫持, 模板解析, 监听通知...), Object.defineProperty和proxt的区别, 
+vue的生命周期, 常见的指令, 自定义指令directive, computer和watch的区别
+
+## 2020/3/16
+
+vue组件通信, vue的性能优化, data是对象和函数返回对象的区别, render()的作用, vuex的工作原理和api功能, vux-router
+
+## 2020/3/17
+
+什么是mvvm框架和Virtual DOM, react和vue的区别, webpack工作原理和优化
