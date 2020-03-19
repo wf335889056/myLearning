@@ -1,0 +1,135 @@
+seo优化
+1. 网站结构布局优化：尽量简单、开门见山，提倡扁平化结构。
+  控制首页链接数量, 扁平化的目录层次, 导航优化
+  网站的结构布局--不可忽略的细节, 控制页面的大小，减少http请求，提高网站的加载速度
+2. 网页代码优化
+  title标题标签<title></title>, meta keywords标签, meta description标签 ,body中的标签, a标签
+  正文标题有h1标签<h1></h1>, img图片标签应使用 "alt" 属性加以说明
+  巧妙利用CSS布局，将重要内容的HTML代码放在最前面，最前面的内容被认为是最重要的，优先让“蜘蛛”读取，进行内容关键词抓取。
+  不要使用iframe框架,因为“蜘蛛”一般不会读取其中的内容
+  谨慎使用 display：none ：对于不想显示的文字内容，应当设置z-index或设置到浏览器显示器之外。因为搜索引擎会过滤掉display:none其中的内容。
+
+
+SSR
+SSR，俗称 服务端渲染 (Server Side Render)，讲人话就是: 直接在服务端层获取数据，渲染出完成的 HTML 文件，直接返回给用户浏览器访问。
+
+前后端分离, 前端与服务端隔离，前端动态获取数据，渲染页面。
+缺点
+1. 首屏渲染性能瓶颈: 空白延迟: HTML下载时间 + JS下载/执行时间 + 请求时间 + 渲染时间。在这段时间内，页面处于空白的状态。
+2. SEO 问题: 由于页面初始状态为空，因此爬虫无法获取页面中任何有效数据，因此对搜索引擎不友好。
+
+好处
+1. 更快的响应时间，不用等待所有的JS都下载完成，浏览器便能显示比较完整的页面了。这个个人深有体会，我的博客最开始仅仅使用了Vue.js，而没有做服务端渲染，加之服务器不在大陆，第一次输入地址到看到完整的页面几乎是过了4、5秒，有时候还更长。
+2. 更好的SSR，我们可以将SEO的关键信息直接在后台就渲染成HTML，而保证搜索引擎的爬虫都能爬取到关键数据。
+
+实现
+
+1. 开发流程: (此处以 React + Router + Redux + Koa 为例)
+
+2. server 中使用node的 Koa 路由监听 页面访问:
+import * as Router from 'koa-router'
+const router = new Router()
+// 如果中间也提供 Api 层
+router.use('/api/home', async () => {
+	// 返回数据
+})
+router.get('*', async (ctx) => {
+	// 返回 HTML
+})
+
+3. 通过访问 url 匹配 前端页面路由:
+// 前端页面路由
+import { pages } from '../../client/app'
+import { matchPath } from 'react-router-dom'
+
+// 使用 react-router 库提供的一个匹配方法
+const matchPage = matchPath(ctx.req.url, page)
+
+4. 通过页面路由的配置进行 数据获取。通常可以在页面路由中增加 SSR 相关的静态配置，用于抽象逻辑，可以保证服务端逻辑的通用性，如:
+class HomePage extends React.Component{
+	public static ssrConfig = {
+		  cache: true,
+         fetch() {
+        	  // 请求获取数据
+         }
+    }
+}
+中间层也使用 http 获取数据，则此时 fetch 方法可前后端共享；
+const data = await matchPage.ssrConfig.fetch()
+中间层并不使用 http，是通过一些 内部调用，例如 Rpc 或 直接读数据库 等，此时也可以直接由服务端调用对应的方法获取数据。通常，这里需要在 ssrConfig 中配置特异性的信息，用于匹配对应的数据获取方法。
+// 页面路由
+class HomePage extends React.Component{
+	public static ssrConfig = {
+        fetch: {
+        	 url: '/api/home',
+        }
+    }
+}
+// 根据规则匹配出对应的数据获取方法
+// 这里的规则可以自由，只要能匹配出正确的方法即可
+const controller = matchController(ssrConfig.fetch.url)
+// 获取数据
+const data = await controller(ctx)
+
+5. 创建 Redux store，并将数据dispatch到里面:
+import { createStore } from 'redux'
+// 获取 Clinet层 reducer
+// 必须复用前端层的逻辑，才能保证一致性；
+import { reducers } from '../../client/store'
+// 创建 store
+const store = createStore(reducers)
+// 获取配置好的 Action
+const action = ssrConfig.action
+// 存储数据	
+store.dispatch(createAction(action)(data))
+
+6. 注入 Store， 调用renderToString将 React Virtual Dom 渲染成 字符串:
+import * as ReactDOMServer from 'react-dom/server'
+import { Provider } from 'react-redux'
+// 获取 Clinet 层根组件
+import { App } from '../../client/app'
+const AppString = ReactDOMServer.renderToString(
+	<Provider store={store}>
+		<StaticRouter
+			location={ctx.req.url}
+			context={{}}>
+			<App />
+		</StaticRouter>
+	</Provider>
+)
+
+7. 将 AppString 包装成完整的 html 文件格式；
+
+8. 此时，已经能生成完整的 HTML 文件。但只是个纯静态的页面，没有样式没有交互。接下来我们就是要插入 JS 与 CSS。我们可以通过访问前端打包后生成的asset-manifest.json文件来获取相应的文件路径，并同样注入到 Html 中引用。
+const html = `
+	<!DOCTYPE html>
+	<html lang="zh">
+		<head></head>
+		<link href="${cssPath}" rel="stylesheet" />
+		<body>
+			<div id="App">${AppString}</div>
+			<script src="${scriptPath}"></script>
+		</body>
+	</html>
+`
+
+9. 进行 数据脱水: 为了把服务端获取的数据同步到前端。主要是将数据序列化后，插入到 html 中，返回给前端。
+import serialize from 'serialize-javascript'
+// 获取数据
+const initState = store.getState()
+const html = `
+	<!DOCTYPE html>
+	<html lang="zh">
+		<head></head>
+		<body>
+			<div id="App"></div>
+			<script type="application/json" id="SSR_HYDRATED_DATA">${serialize(initState)}</script>
+		</body>
+	</html>
+`
+
+ctx.status = 200
+ctx.body = html
+
+
+官方推荐使用react/next.js,  vue/nuxt.js 通过nodejs为服务端来实现

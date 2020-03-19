@@ -1,0 +1,22 @@
+相同点
+都支持服务端渲染
+都使用虚拟DOM来实现
+都有Virtual DOM组件化开发,通过props参数进行父子组件数据的传递,都实现了WebComponent规范
+只有框架的骨架,其他的功能如路由，状态管理等是框架分离的组件
+都是JavaScript的UI框架,数据驱动视图,专注于创造前端的的富应用
+都有支持的native方案,React有native Vue有weex
+都有管理状态,React有redux Vue有vuex
+
+
+不同点
+在React 中，所有的组件的渲染功能使用的都是JSX。JSX是使用XML语法编写Javascript的一种语法糖，它可以使用的完整的编程语言JavaScript来构建视图页面，工具对JSX的支持相比于现有可用的其他Vue模板还是比较先进的，在Vue中我们采用的Web技术并在其上面扩展，使用Template在写模板的过程中，样式风格已确定和更少地涉及业务逻辑,一-个模板总是被声明的，模板中任何HTML都是有效的,相比之下，React 功能没有Vue 模板系统的丰富。需要从组件文件中分离出HTML代码。
+在性能方面，当我们考虑重新渲染功能。当组件的状态发生变化时，React的机制会触发整个组件树的重新呈现，并且由于React有大量的检查机制，能让它提供许多有用的警告和错误提示信息，但可能需要使用额外的属性来避免不必要地重新渲染子组件。虽然Vue的重新渲染功能是开箱即用的，但Vue提供了优化的重新渲染，其中系统在渲染过程中跟踪依赖关系并相应地工作。
+
+React 严格上只针对MVC的view层,Vue则是MVVM模式
+virtual DOM不一样,vue会跟踪每一个组件的依赖关系，不需要重新渲染整个组件树
+而对于React而言，每当应用的状态被改变时，全部组件都会重新渲染所以react中会需要shouldComponentUpdate这个生命周期函数方法来进行控制←
+组件写法不一 -样, React 推荐的做法是JSX + inline style,也就是把HTML和CSS全都写进JavaScript了,即'all in js';
+Vue推荐的做法是webpack+vue-loader的单文件组件格式，即html.css.is写在同一个文件:
+数据绑定:vue实现了数据的双向绑定,react数据流动是单向的。
+state对象在react应用中不可变的，需要使用setState方法更新状态;
+在vue中,state对象不是必须的，数据由data 属性在vue对象中管理
