@@ -10,7 +10,7 @@ ViewModel 是由前端开发人员组织生成和维护的视图数据层。在�
 
 1. 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象；
 2. diff 算法 — 比较两棵虚拟 DOM 树的差异；
-3. pach 算法 — 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树。
+3. patch 算法 — 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树。
 
 好处
 
