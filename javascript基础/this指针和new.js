@@ -43,8 +43,8 @@ function Person(n) {
 }
 var son = new Person()
 
-// 箭头函数 没有自身的this, 所以无法使用call, apply, bind来指定this
-// 也没有隐士参数 arguments
+
+// 箭头函数
 var obj = {
   a: 33,
   c: () => {
@@ -56,6 +56,22 @@ var obj = {
 }
 obj.c()
 obj.d()
+
+/*
+ * 箭头函数和普通函数的区别是什么？
+ * 箭头函数
+ *  1. this总是代表它的直接调用者。
+ *  2. 在默认情况下，没找到直接调用者，this指的是window。
+ *  3. 在严格模式下，没有直接调用者的函数中的this是undefined。
+ *  4. 使用call,apply,bind绑定，this指的是绑定的对象。
+ * 
+ * 箭头函数this：
+ * 1. 在使用=>定义函数的时候，this的指向是 定义时所在的对象，而不是使用时所在的对象；
+ * 2. 不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误；
+ * 3. 不能够使用 arguments 对象；
+ * 4. 不能使用 yield 命令；
+ * 
+ */ 
 
 /* new关键字
  * new一个对象(Object, Array, Function, Date) 返回一个新的对象 

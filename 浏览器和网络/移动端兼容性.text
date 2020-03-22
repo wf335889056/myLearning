@@ -1,0 +1,56 @@
+meta 标签 在做移动端的时候，一般会在 head 里面加一句 meta 标签：
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+pt 与 px
+1. pt 指逻辑像素，相当于一个长度单位
+2. px 指物理像素，相当于一个点，像素点
+3. pt 与 px 的关系就是：1pt 里面有多少个 px 像素点
+以 iPhone6 为例，pt 与 px 的比例是 1:2，平时拿到设计师的 iPhone6 设计图为什么除以 2 的原因就是：设计师给的设计图是 750 x 1334 物理像素，而我们在浏览器模拟调试移动端的时候看到的像素是逻辑像素。
+
+dpr
+dpr 的全称叫 devicePixelRatio，设备上物理像素和设备独立像素的比例，浏览器可以直接读取 window.devicePixelRatio // 2
+设备像素 又称物理像素（physical pixel），设备能控制显示的最小单位。我们常说的分辨率指的就是物理像素，比如 iphone 6S Plus 的分辨率是 1920x1080，表示横向有 1920 个物理像素，竖向有 1080 个物理像素。
+在 iOS 设备，screen.width 乘以 devicePixelRatio 得到的是物理像素值 。
+在 Android 以及 Windows Phone 设备，screen.width 除以 devicePixelRatio 得到的是设备独立像素(dips)值。
+
+vw, vh 单位
+1. vw：1vw 等于视口宽度的 1%
+2. vh：1vh 等于视口高度的 1%
+3. vmin：选取 vw 和 vh 中最小的那个
+4. vmax：选取 vw 和 vh 中最大的那个
+
+媒体查询 @media
+优点：针对不同的分辨率可以做到适配
+缺点：写多套代码，项目大起来，代码难以维护，且啰嗦冗余。
+
+flex 布局
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.item {
+  flex: 1;
+}
+优点：简单快捷
+缺点：相对于有兼容性问题
+
+grid 布局
+.box {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+优点：简单快捷
+缺点：有兼容性问题 
+
+rem 布局方案
+设置根元素 font-size = 设计图宽度 / 10
+获取 rem 的比例：(( px / 根元素 font-size ) / 2) * 1rem
+// iPhone 6 尺寸的根元素大小基准值
+$vw_fontsize: 37.5;
+@function rem($px) {
+  @return (($px / $vw_fontsize) / 2) * 1rem;
+}
+
+vw 方案：postcss-px-to-viewport
